@@ -1,0 +1,7 @@
+modLoader="javafml"
+loaderVersion="[4,)"
+license="MIT"
+[[mods]]
+modId="invtweaks_smoke"
+version="1"
+displayName="Inventory Tweaks Runtime Tests"

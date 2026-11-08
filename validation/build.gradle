@@ -1,0 +1,8 @@
+plugins { id 'java-library'; id 'net.neoforged.moddev' version '2.0.148' }
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+neoForge {
+ version = '21.1.265'
+ runs { server { server(); programArgument '--nogui' }; client { client(); programArguments.addAll('--quickPlaySingleplayer','InventoryTest') } }
+ mods { invtweaks_smoke { sourceSet sourceSets.main } }
+}
+dependencies { implementation files('../build/libs/inventory-tweaks-neoforge-1.64+1.21.1-neoforge.1.jar') }

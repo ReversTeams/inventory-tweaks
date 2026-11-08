@@ -1,0 +1,37 @@
+name: NeoForge 1.21.1 build and menu tests
+on:
+  push:
+    branches: [port/1.21.1-neoforge]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - uses: gradle/actions/setup-gradle@v4
+      - run: chmod +x gradlew && ./gradlew build --no-daemon
+      - name: Run real-menu checks
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('validation/run')
+          p.mkdir(parents=True, exist_ok=True)
+          (p / 'eula.txt').write_text('eula=true\n')
+          (p / 'server.properties').write_text('online-mode=false\nserver-ip=127.0.0.1\nserver-port=25589\nview-distance=2\nsimulation-distance=2\n')
+          PY
+          ./gradlew -p validation runServer --no-daemon
+          python3 -c "from pathlib import Path; assert Path('validation/run/inventory-server-result.txt').read_text().startswith('PASS')"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: inventory-tweaks-neoforge-1.21.1
+          path: |
+            build/libs/*.jar
+            validation/run/inventory-server-result.txt

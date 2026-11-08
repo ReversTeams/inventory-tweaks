@@ -1,0 +1,20 @@
+modLoader="javafml"
+loaderVersion="[4,)"
+license="MIT"
+[[mods]]
+modId="inventorytweaks"
+version="${version}"
+displayName="Inventory Tweaks"
+authors="Original Inventory Tweaks contributors; NeoForge adaptation for ReversTeam"
+logoFile="invtweaks.png"
+description='''Inventory sorting, configurable rules and item trees, transfer shortcuts, and automatic tool/stack refill. Unofficial NeoForge 1.21.1 port.'''
+[[dependencies.inventorytweaks]]
+modId="minecraft"
+type="required"
+versionRange="[1.21.1,1.21.2)"
+side="CLIENT"
+[[dependencies.inventorytweaks]]
+modId="neoforge"
+type="required"
+versionRange="[21.1,21.2)"
+side="CLIENT"
